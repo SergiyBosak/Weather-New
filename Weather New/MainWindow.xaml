@@ -20,7 +20,7 @@
 
         <TextBlock Margin="9 5 0 0" Text="Выберите страну" Grid.Column="0" Grid.Row="0"/>
         <TextBlock Margin="9 5 0 0" Text="Выберите город" Grid.Column="1" Grid.Row="0"/>
-        <ComboBox x:Name="cBCountry" Height="20" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0" Margin="5 25 5 5"></ComboBox>
+        <ComboBox x:Name="cBCountry" Height="20" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0" Margin="5 25 5 5" SelectionChanged="CBCountry_SelectionChanged"/>
         <ComboBox x:Name="cBCity" Height="20" VerticalAlignment="Top" Grid.Column="1" Margin="5 25 5 5"></ComboBox>
         <Button  x:Name="btnGetWeather" Content="Показать погоду" Grid.Column="2" Margin="5 10 5 5" Click="BtnGetWeather_Click" >
             <Button.Background>

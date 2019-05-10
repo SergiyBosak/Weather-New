@@ -71,10 +71,12 @@ namespace Weather_New
 
             var countryNew = country.Distinct();
 
-            cBCountry.DataContext = countryNew.ToList();
+            cBCountry.ItemsSource = countryNew.ToList();
 
             getCities(selectCountry);
         }
+
+
 
         private void getCities(string selectCountry)
         {
@@ -85,17 +87,16 @@ namespace Weather_New
                        orderby item.City
                        select item.City;
 
-            cBCity.DataContext = city.ToList();
+            cBCity.ItemsSource = city.ToList();
 
             string i = string.Empty;
+        }
 
-            foreach (var item in city)
-            {
-                i += item + " ";
+        private void CBCountry_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string selectCountry = cBCountry.SelectedItem.ToString();
 
-            }
-
-            tBResult.Text = i;
+            getCities(selectCountry);
         }
     }
 }
