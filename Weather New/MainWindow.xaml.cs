@@ -27,6 +27,8 @@ namespace Weather_New
 
         const string key = "a2646272358964f1ef9e45a76579ddda";
 
+        List<Location> location = JsonConvert.DeserializeObject<List<Location>>(File.ReadAllText(@"..\..\json\city.list.json"));
+
         public MainWindow()
         {         
             InitializeComponent();
@@ -51,45 +53,41 @@ namespace Weather_New
 
             var result = await response.Content.ReadAsStringAsync();
 
-            //tBResult.Text = result;
-
             JObject weather = JObject.Parse(result);
 
             var temperature = (double)weather["main"]["temp"];
 
-            tBResult.Text = temperature.ToString();
+            string plas = null;
+
+            foreach(char item in temperature.ToString())
+            {
+                if (item != '-')
+                {
+                    plas = "+";
+                }
+            }
+
+            tBResult.Text = $"Текущая температура  {plas}{temperature} °С ";
         }
 
         private void getLocation()
         {
-            string selectCountry = cBCountry.Text;
-
-            List<Location> location = JsonConvert.DeserializeObject<List<Location>>(File.ReadAllText(@"..\..\json\city.list.json"));
-
             var country = from item in location
                           select item.Country;
 
             var countryNew = country.Distinct();
 
             cBCountry.ItemsSource = countryNew.ToList();
-
-            getCities(selectCountry);
         }
-
-
 
         private void getCities(string selectCountry)
         {
-            List<Location> location = JsonConvert.DeserializeObject<List<Location>>(File.ReadAllText(@"..\..\json\city.list.json"));
-
             var city = from item in location
                        where item.Country == selectCountry
                        orderby item.City
                        select item.City;
 
             cBCity.ItemsSource = city.ToList();
-
-            string i = string.Empty;
         }
 
         private void CBCountry_SelectionChanged(object sender, SelectionChangedEventArgs e)

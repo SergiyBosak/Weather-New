@@ -27,7 +27,7 @@
                 <SolidColorBrush Opacity="0.5" Color="OrangeRed" />
             </Button.Background>
         </Button>
-        
-        <TextBlock x:Name="tBResult" Margin="9" Grid.Column="0" Grid.Row="1" />
+
+        <TextBlock x:Name="tBResult" Margin="9,9,10,9" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" />
     </Grid>
 </Window>
