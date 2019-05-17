@@ -5,17 +5,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Weather_New
 {
@@ -30,7 +24,7 @@ namespace Weather_New
         List<Location> location = JsonConvert.DeserializeObject<List<Location>>(File.ReadAllText(@"..\..\json\city.list.json"));
 
         public MainWindow()
-        {         
+        {
             InitializeComponent();
 
             getLocation();
@@ -42,10 +36,12 @@ namespace Weather_New
 
             string country = cBCountry.Text;
 
-            getWeather(city, country);
+            getWeatherNow(city, country);
+
+            getWeather4Days(city, country);
         }
 
-        private async void getWeather(string city, string country)
+        private async void getWeatherNow(string city, string country)
         {
             var client = new HttpClient();
 
@@ -55,11 +51,15 @@ namespace Weather_New
 
             JObject weather = JObject.Parse(result);
 
-            var temperature = (double)weather["main"]["temp"];
+            JToken token = weather;
+
+            Now.RootObject weatherNow = new Now.RootObject();
+
+            weatherNow = token.ToObject<Now.RootObject>();
 
             string plas = null;
 
-            foreach(char item in temperature.ToString())
+            foreach (char item in weatherNow.main.temp.ToString())
             {
                 if (item != '-')
                 {
@@ -67,7 +67,61 @@ namespace Weather_New
                 }
             }
 
-            tBResult.Text = $"Текущая температура  {plas}{temperature} °С ";
+            tBResult1.Text = $"Текущая температура  {plas}{weatherNow.main.temp} °С \n\rАтмосферное давление {weatherNow.main.pressure} мм.рт.ст. \n\rСкорость ветра {weatherNow.wind.speed} м/с";
+
+            string icon = null;
+
+            foreach (Now.Weather item in weatherNow.weather)
+            {
+                icon = item.icon;
+            }
+
+            imgWeather.Source = new BitmapImage(new Uri("http://openweathermap.org/img/w/" + icon + ".png"));
+        }
+
+        private async void getWeather4Days(string city, string country)
+        {
+            var client = new HttpClient();
+
+            var response = await client.GetAsync(new Uri("http://api.openweathermap.org/data/2.5/forecast?q=" + city + "," + country + "&appid=" + key + "&units=metric"));
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            JObject weather = JObject.Parse(result);
+
+            IList<JToken> tokens1 = weather["list"].Children().ToList();
+
+            IList<_4days.List> lists = new List<_4days.List>();
+
+            foreach (JToken item in tokens1)
+            {
+                _4days.List list = item.ToObject<_4days.List>();
+
+                lists.Add(list);
+            }
+
+
+            string str = string.Empty;
+
+            int count = 0;
+
+            foreach (_4days.List item in lists)
+            {
+                count++;
+
+                Regex regex = new Regex(@"00:00:00(\w*)");
+
+                MatchCollection match = regex.Matches(item.dt_txt);
+
+                if (match.Count > 0)
+                {
+                    str += "\n\r";
+                }
+
+                str += $"Дата, время {item.dt_txt};\nТемпература воздуха - {item.main.temp} °С\nСкорость ветра {item.wind.speed} м/с\n\n";
+            }
+
+            tBResult2.Text = str;
         }
 
         private void getLocation()
@@ -97,4 +151,5 @@ namespace Weather_New
             getCities(selectCountry);
         }
     }
+
 }

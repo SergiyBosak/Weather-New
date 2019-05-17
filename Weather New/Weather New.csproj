@@ -62,6 +62,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="4days\City.cs" />
+    <Compile Include="4days\Clouds.cs" />
+    <Compile Include="4days\Coord.cs" />
+    <Compile Include="4days\List.cs" />
+    <Compile Include="4days\Main.cs" />
+    <Compile Include="4days\Rain.cs" />
+    <Compile Include="4days\RootObject.cs" />
+    <Compile Include="4days\Sys.cs" />
+    <Compile Include="4days\Weather.cs" />
+    <Compile Include="4days\Wind.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -73,6 +83,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Now\Clouds.cs" />
+    <Compile Include="Now\Coord.cs" />
+    <Compile Include="Now\Main.cs" />
+    <Compile Include="Now\Rain.cs" />
+    <Compile Include="Now\RootObject.cs" />
+    <Compile Include="Now\Sys.cs" />
+    <Compile Include="Now\Weather.cs" />
+    <Compile Include="Now\Wind.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -100,5 +118,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\weather.jpg" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
