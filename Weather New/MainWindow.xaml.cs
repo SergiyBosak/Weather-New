@@ -100,7 +100,6 @@ namespace Weather_New
                 lists.Add(list);
             }
 
-
             string str = string.Empty;
 
             int count = 0;
@@ -119,9 +118,34 @@ namespace Weather_New
                 }
 
                 str += $"Дата, время {item.dt_txt};\nТемпература воздуха - {item.main.temp} °С\nСкорость ветра {item.wind.speed} м/с\n\n";
+
+                string icon = null;
+
+                foreach (var item2 in item.weather)
+                {
+
+                    icon = item2.icon;
+
+                    Image image = new Image();
+
+                    image.Width = 50;
+                    image.Height = 50;
+
+                    image.Source = new BitmapImage(new Uri("http://openweathermap.org/img/w/" + icon + ".png"));
+
+                    MyPanel.Children.Add(image);
+                }
+
+                //imgWeather1.Source = new BitmapImage(new Uri("http://openweathermap.org/img/w/" + icon + ".png"));
+
             }
 
             tBResult2.Text = str;
+
+
+            
+
+            //DGWeather.ItemsSource = lists;
         }
 
         private void getLocation()

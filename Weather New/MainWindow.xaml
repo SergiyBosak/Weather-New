@@ -51,7 +51,12 @@
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="Карты погоды">
-
+                <ScrollViewer>
+                    <TabPanel x:Name="MyPanel" Width="88" Margin="270 0 0 0">
+                        
+                    </TabPanel>
+                </ScrollViewer>
+                
             </TabItem>
 
 
