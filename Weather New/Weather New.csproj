@@ -121,6 +121,11 @@
   <ItemGroup>
     <Resource Include="img\weather.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="img\icons8-rainy-weather-96.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\icons8-sun-100.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

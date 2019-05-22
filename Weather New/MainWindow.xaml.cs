@@ -81,6 +81,8 @@ namespace Weather_New
 
         private async void getWeather4Days(string city, string country)
         {
+            MyPanel.Children.Clear();
+
             var client = new HttpClient();
 
             var response = await client.GetAsync(new Uri("http://api.openweathermap.org/data/2.5/forecast?q=" + city + "," + country + "&appid=" + key + "&units=metric"));
@@ -104,9 +106,23 @@ namespace Weather_New
 
             int count = 0;
 
+            TextBlock textBlock1 = new TextBlock();
+
+            textBlock1.Text = "Погода сегодня";
+
+            textBlock1.Padding = new Thickness(0, 30, 0, 0);
+
+            textBlock1.FontWeight = FontWeights.Bold;
+
+            textBlock1.Width = 300;
+
+            MyPanel.Children.Add(textBlock1);
+
             foreach (_4days.List item in lists)
             {
                 count++;
+
+                str = null;
 
                 Regex regex = new Regex(@"00:00:00(\w*)");
 
@@ -114,16 +130,29 @@ namespace Weather_New
 
                 if (match.Count > 0)
                 {
-                    str += "\n\r";
+                    //str += "\n\r";
+
+                    TextBlock textBlock2 = new TextBlock();
+
+                    //textBlock2.Margin = new Thickness(10);
+
+                    textBlock2.Width = 300;
+
+                    textBlock2.Text = $"Погода на {item.dt_txt.Substring(0, item.dt_txt.Length - 9)}";
+
+                    textBlock2.Padding = new Thickness(0, 30, 0, 0);
+
+                    textBlock2.FontWeight = FontWeights.Bold;
+
+                    MyPanel.Children.Add(textBlock2);
                 }
 
-                str += $"Дата, время {item.dt_txt};\nТемпература воздуха - {item.main.temp} °С\nСкорость ветра {item.wind.speed} м/с\n\n";
+                str += $"Время {item.dt_txt.Substring(11)};\nТемпература воздуха - {item.main.temp} °С\nСкорость ветра {item.wind.speed} м/с\n";
 
                 string icon = null;
 
                 foreach (var item2 in item.weather)
                 {
-
                     icon = item2.icon;
 
                     Image image = new Image();
@@ -136,16 +165,13 @@ namespace Weather_New
                     MyPanel.Children.Add(image);
                 }
 
-                //imgWeather1.Source = new BitmapImage(new Uri("http://openweathermap.org/img/w/" + icon + ".png"));
+                TextBlock textBlock = new TextBlock();
+
+                textBlock.Text = str;
+
+                MyPanel.Children.Add(textBlock);
 
             }
-
-            tBResult2.Text = str;
-
-
-            
-
-            //DGWeather.ItemsSource = lists;
         }
 
         private void getLocation()

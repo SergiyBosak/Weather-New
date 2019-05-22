@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Weather_New"
         mc:Ignorable="d"
-       Title="Weather" Height="348" Width="400">
+       Title="Weather" Height="348" Width="400" Icon="img/icons8-sun-100.png">
     <Grid ShowGridLines="False" Background="#FFECECEC">
 
         <Grid.ColumnDefinitions>
@@ -47,16 +47,9 @@
             </TabItem>
             <TabItem Header="Прогноз на 4 дня">
                 <ScrollViewer>
-                    <TextBlock x:Name="tBResult2" Margin="10,9,10,11" Grid.Column="0" Grid.Row="1"/>
+                    <TabPanel x:Name="MyPanel" Width="350" HorizontalAlignment="Left"/>
                 </ScrollViewer>
-            </TabItem>
-            <TabItem Header="Карты погоды">
-                <ScrollViewer>
-                    <TabPanel x:Name="MyPanel" Width="88" Margin="270 0 0 0">
-                        
-                    </TabPanel>
-                </ScrollViewer>
-                
+
             </TabItem>
 
 
